@@ -1,4 +1,6 @@
 using Data.Contexts;
+using Data.Interfaces;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using ProductWebApp.Services;
 
@@ -9,7 +11,14 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ISizeRepository, SizeRepository>();
+builder.Services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
+
 builder.Services.AddSingleton<ProductService>();
+builder.Services.AddSingleton<CategoryService>();
+builder.Services.AddSingleton<SizeService>();
 
 
 var app = builder.Build();

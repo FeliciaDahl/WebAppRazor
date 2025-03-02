@@ -1,64 +1,94 @@
-﻿using ProductWebApp.Models;
+﻿using Data.Entities;
+using Data.Interfaces;
+using ProductWebApp.Dto;
+using ProductWebApp.Models;
 using System.Diagnostics;
 
 namespace ProductWebApp.Services;
 
-public class ProductService
+public class ProductService(IProductRepository productRepository)
 {
+    private readonly IProductRepository _productRepository = productRepository;
 
-    private readonly List<Product> _products;
 
-    //public ProductService()
-    //{
-    //    _products = new List<Product>
-    //    {
-    //        new() { Id = 1, ProductName = "White Oversize T-shirt", Price = 199.99m},
-    //        new() { Id = 2, ProductName = "Joggers", Price = 599.99m },
-    //        new() { Id = 3, ProductName = "Black T-shirt", Price = 199.99m },
-    //        new() { Id = 4, ProductName = "Slim Jeans", Price = 599.99m },
-    //        new() { Id = 5, ProductName = "White Top", Price = 199.99m },
-    //        new() { Id = 6, ProductName = "Joggers", Price = 599.99m},
-    //        new() { Id = 7, ProductName = "Joggers", Price = 599.99m},
-    //        new() { Id = 8, ProductName = "Joggers", Price = 599.99m},
-    //        new() { Id = 9, ProductName = "Joggers", Price = 599.99m
-    //    };
-
-    //}
-
-    public List<Product> GetAllProducts()
-    {
-        return _products;
-    }
-
-    public Product? GetProductById(int id)
-    {
-        return _products.FirstOrDefault(p => p.Id == id);
-    }
-
-    public bool AddProduct(Product product)
+    public async Task<bool> AddproductAsync (ProductRegistrationForm form)
     {
         try
         {
-            product.Id = _products.Count > 0 ? _products.Max(p => p.Id) + 1 : 1;
-            _products.Add(product);
+            var product = new ProductEntity
+            {
+                ProductName = form.ProductName,
+                Price = form.Price,
+                CategoryId = form.CategoryId,
+                ProductSizes = form.SelectedSizeIds.Select(sizeId => new ProductSizeEntity { SizeId = sizeId }).ToList()
 
+            };
+
+            await _productRepository.AddAsync(product);
+            await _productRepository.SaveAsync();
             return true;
         }
         catch (Exception ex)
         {
-            Debug.WriteLine(ex.Message);
+            Debug.WriteLine($"Error adding product: {ex.Message}");
             return false;
         }
     }
 
-    public void DeleteProduct(int id)
+    public async Task<List<ProductEntity>> GetAllProductsAsync()
     {
-        var product = GetProductById(id);
-        if (product != null)
+        try
         {
-            _products.Remove(product);
+            return await _productRepository.GetAllAsync();
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error fetching products: {ex.Message}");
+            return [];
         }
     }
+
+    public async Task<ProductEntity?> GetProductByIdAsync(int id)
+    {
+        try
+        {
+            return await _productRepository.FindAsync(p => p.Id == id);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error fetching product by ID {id}: {ex.Message}");
+            return null;
+        }
+    }
+    public async Task<bool> UpdateProductAsync(ProductEntity product)
+    {
+        try
+        {
+            _productRepository.Update(product);
+            await _productRepository.SaveAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error updating product: {ex.Message}");
+            return false;
+        }
+    }
+    public async Task<bool> DeleteProductAsync(ProductEntity product)
+    {
+        try
+        {
+            _productRepository.Delete(product);
+            await _productRepository.SaveAsync();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Error deleting product: {ex.Message}");
+            return false;
+        }
+    }
+
 }
 
 

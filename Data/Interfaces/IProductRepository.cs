@@ -2,7 +2,7 @@
 
 namespace Data.Interfaces
 {
-    public interface IProductRepository
+    public interface IProductRepository :IBaseRepository<ProductEntity>
     {
         Task<List<ProductEntity>> GetAllWithDetailsAsync();
         Task<ProductEntity?> GetByIdWithDetailsAsync(int id);
