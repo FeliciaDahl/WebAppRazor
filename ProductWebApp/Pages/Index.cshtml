@@ -1,0 +1,15 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h2 class="subheader">New Arrivals</h2>
+
+<div class="container">
+        <section class="product-section">
+           @await Html.PartialAsync("Components/_ProductList", Model.Products)
+    </section>
+</div>
+
+  

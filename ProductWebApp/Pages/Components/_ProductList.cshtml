@@ -1,0 +1,18 @@
+﻿@model List<Product>
+
+<div class="product-list">
+
+    @if (!Model.Any())
+    {
+        <div>No Products found.</div>
+    }
+    else
+    {
+        foreach (var product in Model)
+        {
+            @await Html.PartialAsync("Components/_ProductListItem", product)
+        }
+    }
+
+
+</div>
