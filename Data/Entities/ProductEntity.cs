@@ -22,5 +22,4 @@ public class ProductEntity
 
     public virtual ICollection<ProductSizeEntity> ProductSizes { get; set; } = [];
 
-
 }
