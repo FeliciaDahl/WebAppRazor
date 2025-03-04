@@ -19,6 +19,8 @@ public class ProductEntity
     public int CategoryId { get; set;}
     public CategoryEntity Category { get; set; } = null!;
 
+    public int BrandId { get; set; }
+    public BrandEntity Brand { get; set; } = null!;
 
     public virtual ICollection<ProductSizeEntity> ProductSizes { get; set; } = [];
 

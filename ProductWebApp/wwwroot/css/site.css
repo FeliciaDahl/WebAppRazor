@@ -17,11 +17,9 @@ html, body {
 }
 
 .container {
-
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
-    
 }
 
 .header {
@@ -94,36 +92,42 @@ footer {
 
 .product-list {
     display: grid;
-
     margin: 0 auto;
     gap: 1.5rem;
     justify-content: center;
-    grid-template-columns: repeat(5, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
+
 .product-list-item {
-    display:grid;
-    place-items:center;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    justify-content: center;
     padding: 1rem;
     border: 1px solid #808080;
     border-radius: 5px;
-    text-align: left;
+    
+    width: 100%;
+}
+
+
+.product-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 220px;
+    height: 300px;
+    border: 0.5px solid #808080;
+    border-radius: 5px;
+    padding-bottom:0.5rem;
+    margin: 0.5rem auto; 
+   
 }
 
 .item {
     padding-bottom: 0.5rem;
     text-align:left;
-}
-
-.product-img {
-    display: grid;
-    margin-bottom:1rem;
-    justify-content:center;
-    place-items:center;
-   
-    width: 250px;
-    height: 300px;
-    border: 0.5px solid #808080;
-    border-radius: 5px;
 }
 
 
@@ -138,3 +142,120 @@ footer {
         grid-template-columns: repeat(1, minmax(200px, 1fr));
     }
 }
+
+
+
+
+form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    border: 0.8px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/*input[type="number"] {
+    width: 20%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}*/
+
+    input[type="number"],
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    input:focus,
+    select:focus {
+        
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+span {
+    color: red;
+    font-size: 0.875rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background:#000000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    button:hover {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+.size-card {
+    display: flex;
+    flex-direction: column; /* Raderna staplas vertikalt */
+    gap: 0.5rem; /* Mellanrum mellan raderna */
+    max-width: 300px; /* Anpassa bredden efter behov */
+}
+
+.size-row {
+    display: grid;
+    grid-template-columns: 30px 70px 50px; /* Anpassa kolumner: Checkbox | Storlek | Input */
+    align-items: center;
+  
+}
+    /*.size-row label {
+        min-width: 100px;*/ /* Fixerar bredden så texten inte hoppar runt */
+        /*text-align: left;
+    }*/
+
+
+
+
+div label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.2);
+    margin-right: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    form {
+        width: 90%;
+    }
+}
+

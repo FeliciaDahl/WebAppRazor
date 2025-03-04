@@ -12,6 +12,7 @@ public class Product
     public decimal Price { get; set; }
 
     public string CategoryName { get; set; } = null!;
+    public string BrandName { get; set; } = null!;
     public string ProductSize { get; set; } = null!;
 
 }

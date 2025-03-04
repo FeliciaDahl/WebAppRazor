@@ -18,8 +18,8 @@ public class IndexModel : PageModel
         _productService = productService;
     }
 
-    public void OnGet()
+    public async Task OnGet()
     {
-        Products = _productService.GetAllProducts();
+        Products = (await _productService.GetAllProductsAsync()).ToList();
     }
 }

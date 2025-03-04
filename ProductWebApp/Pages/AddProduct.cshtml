@@ -1,0 +1,54 @@
+﻿@page
+
+@model ProductWebApp.Pages.AddProductModel
+@{
+    ViewData["Title"] = "Add Product";
+}
+<h2>Add new product to webshop</h2>
+
+<form method="post">
+    <div>
+        <label for="ProductName">Product name:</label>
+        <input type="text" asp-for="ProductForm.ProductName" required />
+        <span asp-validation-for="ProductForm.ProductName"></span>
+    </div>
+
+    <div>
+        <label for="Price">Price:</label>
+        <input type="number" asp-for="ProductForm.Price" step="0.01" required />
+        <span asp-validation-for="ProductForm.Price"></span>
+    </div>
+  
+    <div>
+        <label for="CategoryId">Kategori:</label>
+        <select asp-for="ProductForm.CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "CategoryName"))">
+            <option value="">Choose Category</option>
+        </select>
+        <span asp-validation-for="ProductForm.CategoryId"></span>
+    </div>
+
+    <div>
+        <label for="BrandId">Kategori:</label>
+        <select asp-for="ProductForm.BrandId" asp-items="@(new SelectList(Model.Brands, "Id", "BrandName"))">
+            <option value="">Choose brand</option>
+        </select>
+        <span asp-validation-for="ProductForm.BrandId"></span>
+    </div>
+    <label>Sizes:</label>
+    <div class="size-card">
+        @foreach (var size in Model.Sizes)
+        {
+            <div class="size-row">
+                <input type="checkbox" name="ProductForm.SelectedSizeIds" value="@size.Id" />
+                <label>@size.ProductSize</label>
+
+                <input class="size-q" type="number" name="ProductForm.SizeQuantities[@size.Id]" min="0" value="1" />
+            </div>
+        }
+    </div>
+    @* DEN VILL INTE SPARA.. FELSÖK! *@
+
+    <button type="submit">Add product</button>
+</form>
+
+<a asp-page="/Index">Back to homepage</a>

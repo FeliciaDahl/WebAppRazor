@@ -9,6 +9,7 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
 
     public DbSet<ProductEntity> Products { get; set; }
     public DbSet<CategoryEntity> Categories { get; set; }
+    public DbSet<BrandEntity> Brands { get; set; }
     public DbSet<SizeEntity> Sizes { get; set; }
     public DbSet<ProductSizeEntity> ProductSizes { get; set; }
 

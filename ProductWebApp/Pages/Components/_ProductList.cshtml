@@ -1,7 +1,7 @@
 ﻿@model List<Product>
 
+<div class="container">
 <div class="product-list">
-
     @if (!Model.Any())
     {
         <div>No Products found.</div>
@@ -13,6 +13,5 @@
             @await Html.PartialAsync("Components/_ProductListItem", product)
         }
     }
-
-
+    </div>
 </div>

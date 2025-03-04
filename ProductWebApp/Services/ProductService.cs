@@ -20,8 +20,12 @@ public class ProductService(IProductRepository productRepository)
                 ProductName = form.ProductName,
                 Price = form.Price,
                 CategoryId = form.CategoryId,
-                ProductSizes = form.SelectedSizeIds.Select(sizeId => new ProductSizeEntity { SizeId = sizeId }).ToList()
-
+                ProductSizes = form.SelectedSizeIds.Select(sizeId => new ProductSizeEntity
+                {
+                    SizeId = sizeId,
+                    Quantity = form.SizeQuantities.ContainsKey(sizeId) ? form.SizeQuantities[sizeId] : 1 
+                }).ToList()
+            
             };
 
             await _productRepository.AddAsync(product);
@@ -35,12 +39,24 @@ public class ProductService(IProductRepository productRepository)
         }
     }
 
-    public async Task<List<ProductEntity>> GetAllProductsAsync()
+    public async Task<IEnumerable<Product>> GetAllProductsAsync()
     {
         try
         {
-            return await _productRepository.GetAllAsync();
+            var entities = await _productRepository.GetAllWithDetailsAsync();
+
+            return entities.Select(entity => new Product
+            {
+                Id = entity.Id,
+                ProductName = entity.ProductName,
+                Price = entity.Price,
+                CategoryName = entity.Category?.CategoryName ?? "Okänd",
+                BrandName = entity.Brand?.BrandName ?? "Okänd",
+                ProductSize = string.Join(", ", entity.ProductSizes.Select(ps => ps.Size.ProductSize))
+
+            }).ToList();
         }
+
         catch (Exception ex)
         {
             Debug.WriteLine($"Error fetching products: {ex.Message}");

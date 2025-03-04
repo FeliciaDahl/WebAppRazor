@@ -9,6 +9,7 @@
 <div class="container">
         <section class="product-section">
            @await Html.PartialAsync("Components/_ProductList", Model.Products)
+        <a asp-page="/AddProduct">Lägg till en produkt</a>
     </section>
 </div>
 

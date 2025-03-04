@@ -11,15 +11,17 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 
 builder.Services.AddRazorPages();
 
+
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ISizeRepository, SizeRepository>();
 builder.Services.AddScoped<IProductSizeRepository, ProductSizeRepository>();
+builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 
-builder.Services.AddSingleton<ProductService>();
-builder.Services.AddSingleton<CategoryService>();
-builder.Services.AddSingleton<SizeService>();
-
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<CategoryService>();
+builder.Services.AddScoped<SizeService>();
+builder.Services.AddScoped<BrandService>();
 
 var app = builder.Build();
 

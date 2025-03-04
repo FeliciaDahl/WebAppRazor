@@ -13,6 +13,7 @@ public class ProductRepository(DataContext context) : BaseRepository<ProductEnti
     {
         return await _dbSet
             .Include(p => p.Category)
+            .Include(p => p.Brand)
             .Include(p => p.ProductSizes)
                 .ThenInclude(ps => ps.Size)
             .ToListAsync();
@@ -22,6 +23,7 @@ public class ProductRepository(DataContext context) : BaseRepository<ProductEnti
     {
         return await _dbSet
             .Include(p => p.Category)
+            .Include(p => p.Brand)
             .Include(p => p.ProductSizes)
                 .ThenInclude(ps => ps.Size)
             .FirstOrDefaultAsync(p => p.Id == id);
